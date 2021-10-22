@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { editContact } from "../../redux/contacts/contacts-operations";
+import { logOut } from "../users/users-operation";
 
 import * as contactsActions from "./contacts-actions";
 
@@ -14,6 +15,7 @@ const items = createReducer(initialContacts, {
   ],
   [contactsActions.deleteContactSuccess]: (state, action) =>
     state.filter(({ id }) => id !== action.payload),
+  [logOut.fulfilled]: (state) => (state = []),
 });
 
 const filter = createReducer("", {

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const FormWrap = styled.form`
-  border: #bd86c7 1px solid;
+  border: #facbf2 1px solid;
   border-radius: 5px;
   width: 500px;
   display: flex;

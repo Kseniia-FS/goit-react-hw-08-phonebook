@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/users/users-operation";
-import { FormWrap } from "./SignUpForm.styled";
-import { InputComponent } from "../../_share/Input/Input";
-import { SubButton } from "../../_share/Buttons/SubmitButton";
+import { Form } from "../../_share/Form/Form";
+
 export default function SignUpForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,6 +27,34 @@ export default function SignUpForm() {
         break;
     }
   };
+  const options = [
+    {
+      label: "Name",
+      name: "name",
+      key: 1,
+      value: name,
+      onChange: onInputChange,
+      pattern: "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
+    },
+    {
+      label: "Email",
+      name: "email",
+      key: 2,
+      type: "email",
+      value: email,
+      onChange: onInputChange,
+      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+    },
+    {
+      type: "password",
+      key: 3,
+      label: "Password",
+      name: "password",
+      value: password,
+      onChange: onInputChange,
+      autocomplete: "current-password",
+    },
+  ];
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -42,31 +69,6 @@ export default function SignUpForm() {
   };
 
   return (
-    <FormWrap onSubmit={onHandleSubmit}>
-      <InputComponent
-        lable="Name"
-        name="name"
-        value={name}
-        onChange={onInputChange}
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-      />
-      <InputComponent
-        lable="Email"
-        name="email"
-        type="email"
-        value={email}
-        onChange={onInputChange}
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"
-      />
-      <InputComponent
-        type="password"
-        lable="Password"
-        name="password"
-        value={password}
-        onChange={onInputChange}
-        autocomplete="current-password"
-      />
-      <SubButton name="Sign up" />
-    </FormWrap>
+    <Form onSubmit={onHandleSubmit} options={options} btnName="Sign up"></Form>
   );
 }

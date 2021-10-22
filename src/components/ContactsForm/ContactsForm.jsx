@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { InputComponent } from "../../_share/Input/Input";
-import { FormWrap } from "./Form.styled";
-import { useSelector, useDispatch } from "react-redux";
-import { postContatc, getItems } from "../../redux/contacts/";
-import { SubButton } from "../../_share/Buttons/SubmitButton";
 
-export const Form = () => {
+import { useSelector, useDispatch } from "react-redux";
+import { postContatc, getItems } from "../../redux/contacts";
+
+import { Form } from "../../_share/Form/Form";
+
+export const ContactsForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -49,26 +49,31 @@ export const Form = () => {
     setName("");
     setNumber("");
   };
+  const options = [
+    {
+      label: "Name",
+      name: "name",
+      key: 4,
+      value: name,
+      onChange: onInputHandler,
+      pattern: "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
+    },
+    {
+      label: "Phone number",
+      name: "number",
+      key: 5,
+      type: "tel",
+      value: number,
+      onChange: onInputHandler,
+      pattern: "+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}",
+    },
+  ];
 
   return (
-    <FormWrap onSubmit={handleSubmit}>
-      <InputComponent
-        lable="Name"
-        name="name"
-        value={name}
-        onChange={onInputHandler}
-        pattern={"^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"}
-      />
-      <InputComponent
-        lable="Phone number"
-        type="tel"
-        name="number"
-        value={number}
-        onChange={onInputHandler}
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-      />
-
-      <SubButton name="Add contact" />
-    </FormWrap>
+    <Form
+      onSubmit={handleSubmit}
+      options={options}
+      btnName="Add contact"
+    ></Form>
   );
 };
