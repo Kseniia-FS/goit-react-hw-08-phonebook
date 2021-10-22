@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "axios";
 
-axios.defaults.baseURL = "http://connections-api.herokuapp.com";
+axios.defaults.baseURL = "https://connections-api.herokuapp.com";
 
 export const token = {
   set(token) {
@@ -18,7 +18,7 @@ export const register = createAsyncThunk("user/register", async (userData) => {
     const { data } = await axios.post("/users/signup", userData);
     return data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 });
 
@@ -28,7 +28,7 @@ export const logIn = createAsyncThunk("user/login", async (userData) => {
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 });
 export const logOut = createAsyncThunk("user/logout", async () => {
@@ -36,7 +36,7 @@ export const logOut = createAsyncThunk("user/logout", async () => {
     await axios.post("/users/logout");
     token.unset();
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 });
 
@@ -56,7 +56,7 @@ export const refreshUser = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 );
