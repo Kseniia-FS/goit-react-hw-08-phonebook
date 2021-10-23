@@ -11,7 +11,6 @@ export const InputComponent = ({
   return (
     <TextField
       color="secondary"
-      id="outlined-basic"
       label={lable}
       variant="outlined"
       margin="normal"

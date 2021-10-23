@@ -17,10 +17,10 @@ export default function NavBar() {
       )}
       {!isLoggedInNow && (
         <>
-          <Link to="/register" exact>
+          <Link to="/auth/register" exact>
             Sign Up
           </Link>
-          <Link to="/login" exact>
+          <Link to="/auth/login" exact>
             Log In
           </Link>
         </>

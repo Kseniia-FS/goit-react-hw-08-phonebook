@@ -13,42 +13,52 @@ export const token = {
   },
 };
 
-export const register = createAsyncThunk("user/register", async (userData) => {
-  try {
-    const { data } = await axios.post("/users/signup", userData);
-    return data;
-  } catch (error) {
-    throw error;
+export const register = createAsyncThunk(
+  "user/register",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/users/signup", userData);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      rejectWithValue(error.massage);
+    }
   }
-});
+);
 
-export const logIn = createAsyncThunk("user/login", async (userData) => {
-  try {
-    const { data } = await axios.post("/users/login", userData);
-    token.set(data.token);
-    return data;
-  } catch (error) {
-    throw error;
+export const logIn = createAsyncThunk(
+  "user/login",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/users/login", userData);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      rejectWithValue(error.massage);
+    }
   }
-});
-export const logOut = createAsyncThunk("user/logout", async () => {
-  try {
-    await axios.post("/users/logout");
-    token.unset();
-  } catch (error) {
-    throw error;
+);
+export const logOut = createAsyncThunk(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.post("/users/logout");
+      token.unset();
+    } catch (error) {
+      rejectWithValue(error.massage);
+    }
   }
-});
+);
 
 export const refreshUser = createAsyncThunk(
   "user/refresh",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
+  async (_, { rejectWithValue, getState }) => {
+    const state = getState();
 
     const currentToken = state.auth.token;
 
     if (currentToken === null) {
-      return thunkAPI.rejectWithValue();
+      return rejectWithValue("No currentToken");
     }
     token.set(currentToken);
     try {
@@ -56,7 +66,7 @@ export const refreshUser = createAsyncThunk(
 
       return data;
     } catch (error) {
-      throw error;
+      rejectWithValue(error.massage);
     }
   }
 );

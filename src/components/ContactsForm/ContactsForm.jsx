@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { contactsFormOptions } from "../../options/AuthFormOptions";
 import { useSelector, useDispatch } from "react-redux";
 import { postContatc, getItems } from "../../redux/contacts";
 
@@ -49,31 +49,14 @@ export const ContactsForm = () => {
     setName("");
     setNumber("");
   };
-  const options = [
-    {
-      label: "Name",
-      name: "name",
-      key: 4,
-      value: name,
-      onChange: onInputHandler,
-      pattern: "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
-    },
-    {
-      label: "Phone number",
-      name: "number",
-      key: 5,
-      type: "tel",
-      value: number,
-      onChange: onInputHandler,
-      pattern: "+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}",
-    },
-  ];
 
   return (
     <Form
       onSubmit={handleSubmit}
-      options={options}
+      formOptions={contactsFormOptions}
       btnName="Add contact"
+      onChange={onInputHandler}
+      dataForm={{ name, number }}
     ></Form>
   );
 };

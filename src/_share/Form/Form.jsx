@@ -1,33 +1,28 @@
 import { InputComponent } from "../Input/Input";
 import { FormWrap } from "./Form.styled";
 import { SubButton } from "../Buttons/SubmitButton";
-export const Form = ({ options, onSubmit, btnName }) => {
+
+export const Form = ({
+  onSubmit,
+  btnName,
+  dataForm,
+  onChange,
+  formOptions,
+}) => {
   return (
     <FormWrap onSubmit={onSubmit}>
-      {options.map(
-        ({
-          label,
-          value,
-
-          type,
-          name,
-          onChange,
-          pattern,
-          key,
-          autoComplete,
-        }) => (
-          <InputComponent
-            key={key}
-            lable={label}
-            value={value}
-            type={type}
-            name={name}
-            onChange={onChange}
-            pattern={pattern}
-            autoComplete={autoComplete}
-          />
-        )
-      )}
+      {formOptions.map(({ label, type, name, pattern, autoComplete }) => (
+        <InputComponent
+          key={name}
+          lable={label}
+          value={dataForm[name]}
+          type={type}
+          name={name}
+          onChange={onChange}
+          pattern={pattern}
+          autoComplete={autoComplete}
+        />
+      ))}
       <SubButton title={btnName} />
     </FormWrap>
   );
